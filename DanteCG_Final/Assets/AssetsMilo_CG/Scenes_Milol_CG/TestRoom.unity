@@ -239,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetosRecolectadosEscena: 0
   objetosNecesariosEscena: 4
-  textoPuntaje: {fileID: 1784030772}
+  textoPuntaje: {fileID: 1125312062}
 --- !u!4 &562645252
 Transform:
   m_ObjectHideFlags: 0
