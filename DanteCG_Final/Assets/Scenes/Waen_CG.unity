@@ -513,7 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jugador: {fileID: 1539182467}
-  rangoVision: 2
+  rangoVision: 5
   rangoAtaque: 2
   puntosPatrullaje:
   - {fileID: 1534183098}
@@ -854,7 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jugador: {fileID: 1539182467}
-  rangoVision: 2
+  rangoVision: 5
   rangoAtaque: 2
   puntosPatrullaje:
   - {fileID: 480241124}
