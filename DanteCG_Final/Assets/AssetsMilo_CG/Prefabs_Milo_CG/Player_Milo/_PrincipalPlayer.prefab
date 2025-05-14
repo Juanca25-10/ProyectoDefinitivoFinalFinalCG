@@ -160,7 +160,7 @@ MonoBehaviour:
   _jumpHeight: 0.8
   _mouseSensitivity: 1.5
   _crouchHeight: 0.2
-  _standHeight: 2
+  _standHeight: 1.76
   _crouchSpeed: 0.3
   _crouchCameraOffset: -0.2
   bobSpeed: 11
