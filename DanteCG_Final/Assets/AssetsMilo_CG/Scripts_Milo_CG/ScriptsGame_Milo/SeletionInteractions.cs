@@ -42,6 +42,7 @@ public class SeletionInteractions : MonoBehaviour
                 if (objeto != null)
                 {
                     objeto.ActivarObjeto();
+                    Debug.Log("Interacting with: " + objeto);
                 }
             }
         }

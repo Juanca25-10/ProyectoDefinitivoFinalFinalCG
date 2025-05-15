@@ -4,17 +4,32 @@ using UnityEngine;
 
 public class InteractionDoors : MonoBehaviour, IInteractuable
 {
-    public bool doorOpen = true;
+    public bool doorOpen;
     public float doorOpenAngle = 90f;
     public float doorCloseAngle = 0f;
     public float smooth = 2f;
 
-    public AudioClip openDoor;
-    public AudioClip closeDoor;
+    
 
     public void ActivarObjeto()
     {
-        Destroy(gameObject);
+        if (doorOpen)
+        {
+            doorOpen = false;
+            Debug.Log("Cerrando puerta");
+            StartCoroutine(AbrirDespuesDeTiempo(5f));
+        }
+        else
+        {
+            doorOpen = true;
+            Debug.Log("Abriendo puerta");
+        }
+    }
+
+    IEnumerator AbrirDespuesDeTiempo(float segundos)
+    {
+        yield return new WaitForSeconds(segundos);
+        doorOpen = true;
     }
 
     void Update()
@@ -31,19 +46,6 @@ public class InteractionDoors : MonoBehaviour, IInteractuable
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("TriggerDoor"))
-        {
-            AudioSource.PlayClipAtPoint(openDoor, transform.position, 1);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("TriggerDoor"))
-        {
-            AudioSource.PlayClipAtPoint(closeDoor, transform.position, 1);
-        }
-    }
+    
 }
 
