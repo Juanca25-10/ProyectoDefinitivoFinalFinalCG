@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController_Paraiso : MonoBehaviour
 {
-    public Transform[] puntosDeAparicion; // Asigna aquí tus 4 esferas
-    public float tiempoParaReaccionar = 10f;
+    public GameObject[] puntosDeAparicion; // Asigna aquí tus 4 esferas
+    public float tiempoParaReaccionar = 15f;
     public AudioSource audioSource;
     public AudioClip[] sonidosPuerta; // Un sonido distinto por puerta
 
@@ -16,7 +16,14 @@ public class EnemyController_Paraiso : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < puntosDeAparicion.Length; i++)
+        {
+            puntosDeAparicion[i].SetActive(false);
+        }
+        
         IniciarRutina();
+
+        
     }
 
     public void IniciarRutina()
@@ -34,42 +41,53 @@ public class EnemyController_Paraiso : MonoBehaviour
     {
         while (!jugadorPerdio)
         {
-            Debug.Log("Cambiando de posicion enemy");
+            // Desactiva todas las esferas antes de activar la nueva
+            for (int i = 0; i < puntosDeAparicion.Length; i++)
+            {
+                puntosDeAparicion[i].SetActive(false);
+            }
+
+            // Elegir punto aleatorio y mover al enemigo
             indiceActual = Random.Range(0, puntosDeAparicion.Length);
-            Transform punto = puntosDeAparicion[indiceActual];
+            Transform punto = puntosDeAparicion[indiceActual].transform;
+            puntosDeAparicion[indiceActual].SetActive(true); // Activar la nueva esfera
             transform.position = punto.position;
 
-            // Sonido de aviso
+            // Sonido
             if (audioSource && sonidosPuerta.Length > indiceActual)
-                audioSource.PlayOneShot(sonidosPuerta[indiceActual]);
+                AudioSource.PlayClipAtPoint(sonidosPuerta[indiceActual], punto.position);
 
             Debug.Log("¡Enemigo en puerta: " + indiceActual + "!");
 
-            // Esperar a que se cierre la puerta
+            // Esperar por reacción del jugador
             float tiempo = 0f;
             while (tiempo < tiempoParaReaccionar)
             {
-                if (InteractionDoors.EstadoPuertas[indiceActual] == false) // Puerta cerrada
+                if (InteractionDoors.EstadoPuertas[indiceActual] == false)
                 {
-                    Debug.Log("Puerta cerrada a tiempo.");
-                    break;
+                    Debug.Log("Puerta cerrada " + indiceActual + " a tiempo.");
+                    break; // No necesitas desactivar aquí, ya se desactivan al inicio del loop
                 }
 
                 tiempo += Time.deltaTime;
                 yield return null;
             }
 
-            // Si no se cerró a tiempo
             if (InteractionDoors.EstadoPuertas[indiceActual] == true)
             {
                 jugadorPerdio = true;
                 Debug.Log("¡PERDISTE!");
-                // Aquí puedes activar un GameOver u otro evento
+                // Puedes llamar aquí a GameOver
                 break;
             }
 
-            // Esperar un poco antes de reaparecer
             yield return new WaitForSeconds(2f);
+        }
+
+        // Asegúrate de desactivar todas al terminar
+        for (int i = 0; i < puntosDeAparicion.Length; i++)
+        {
+            puntosDeAparicion[i].SetActive(false);
         }
     }
 }

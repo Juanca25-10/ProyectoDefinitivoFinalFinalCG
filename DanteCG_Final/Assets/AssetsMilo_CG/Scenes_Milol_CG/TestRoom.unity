@@ -244,7 +244,7 @@ PrefabInstance:
     - target: {fileID: 5587202096365294856, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
       propertyPath: m_Name
-      value: PuertaPrefab (2)
+      value: PuertaPrefab3
       objectReference: {fileID: 0}
     - target: {fileID: 8433220850026181809, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 281330839}
   - component: {fileID: 281330838}
   m_Layer: 0
-  m_Name: Sphere (2)
+  m_Name: Sphere3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -376,7 +376,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4bd33f9d887060c46a83007d6131dea2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 598324951}
   - component: {fileID: 598324950}
   m_Layer: 0
-  m_Name: Sphere (1)
+  m_Name: Sphere2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -741,7 +741,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4bd33f9d887060c46a83007d6131dea2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1968,12 +1968,12 @@ PrefabInstance:
     - target: {fileID: 5423169672941686936, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
       propertyPath: indicePuerta
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5587202096365294856, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
       propertyPath: m_Name
-      value: PuertaPrefab (3)
+      value: PuertaPrefab2
       objectReference: {fileID: 0}
     - target: {fileID: 8433220850026181809, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
@@ -2366,11 +2366,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   puntosDeAparicion:
-  - {fileID: 1993126711}
-  - {fileID: 598324949}
-  - {fileID: 281330837}
-  - {fileID: 1716783146}
-  tiempoParaReaccionar: 3
+  - {fileID: 1993126710}
+  - {fileID: 598324948}
+  - {fileID: 281330836}
+  - {fileID: 1716783145}
+  tiempoParaReaccionar: 15
   audioSource: {fileID: 1595478933}
   sonidosPuerta:
   - {fileID: 8300000, guid: 0f6b7ac452d70774a918b635fbc0ba5e, type: 3}
@@ -2386,7 +2386,7 @@ Transform:
   m_GameObject: {fileID: 1595478930}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.174797, y: -6.1596556, z: -18.93744}
+  m_LocalPosition: {x: 7.61, y: 1.24, z: -13.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2411,9 +2411,9 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  DopplerLevel: 0
+  MinDistance: 2.92
+  MaxDistance: 13
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -2633,7 +2633,7 @@ GameObject:
   - component: {fileID: 1716783148}
   - component: {fileID: 1716783147}
   m_Layer: 0
-  m_Name: Sphere (3)
+  m_Name: Sphere4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2695,7 +2695,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4bd33f9d887060c46a83007d6131dea2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2973,12 +2973,12 @@ PrefabInstance:
     - target: {fileID: 5423169672941686936, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
       propertyPath: indicePuerta
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5587202096365294856, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
       propertyPath: m_Name
-      value: PuertaPrefab (1)
+      value: PuertaPrefab4
       objectReference: {fileID: 0}
     - target: {fileID: 8433220850026181809, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
@@ -3048,7 +3048,7 @@ GameObject:
   - component: {fileID: 1993126713}
   - component: {fileID: 1993126712}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Sphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3062,7 +3062,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1993126710}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 5.79, y: 0.36, z: 3.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3110,7 +3110,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4bd33f9d887060c46a83007d6131dea2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3503,7 +3503,7 @@ PrefabInstance:
     - target: {fileID: 5587202096365294856, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
       propertyPath: m_Name
-      value: PuertaPrefab
+      value: PuertaPrefab1
       objectReference: {fileID: 0}
     - target: {fileID: 8433220850026181809, guid: 983a3c43bb5d02c409f774eb5aa208b6,
         type: 3}
@@ -3586,7 +3586,7 @@ SceneRoots:
   - {fileID: 807401610}
   - {fileID: 968724919}
   - {fileID: 4400934833007057604}
-  - {fileID: 1790461482}
-  - {fileID: 151281553}
   - {fileID: 1450296921}
+  - {fileID: 151281553}
+  - {fileID: 1790461482}
   - {fileID: 1595478932}

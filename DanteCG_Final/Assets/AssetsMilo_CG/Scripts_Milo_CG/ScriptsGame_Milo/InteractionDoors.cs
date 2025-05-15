@@ -14,20 +14,35 @@ public class InteractionDoors : MonoBehaviour, IInteractuable
     public static List<bool> EstadoPuertas = new List<bool>() { true, true, true, true };
 
 
+    void Awake()
+    {
+        // Asegura que la lista tiene el tamaño correcto
+        if (indicePuerta >= EstadoPuertas.Count)
+        {
+            for (int i = EstadoPuertas.Count; i <= indicePuerta; i++)
+            {
+                EstadoPuertas.Add(true);
+            }
+        }
+
+        // Forzar valor inicial correcto
+        EstadoPuertas[indicePuerta] = doorOpen;
+    }
 
     public void ActivarObjeto()
     {
-        EstadoPuertas[indicePuerta] = doorOpen;
         if (doorOpen)
         {
             doorOpen = false;
             Debug.Log("Cerrando puerta");
+            EstadoPuertas[indicePuerta] = false;
             StartCoroutine(AbrirDespuesDeTiempo(5f));
         }
         else
         {
             doorOpen = true;
             Debug.Log("Abriendo puerta");
+            EstadoPuertas[indicePuerta] = true;
         }
     }
 
@@ -35,6 +50,7 @@ public class InteractionDoors : MonoBehaviour, IInteractuable
     {
         yield return new WaitForSeconds(segundos);
         doorOpen = true;
+        EstadoPuertas[indicePuerta] = true;
     }
 
     void Update()
