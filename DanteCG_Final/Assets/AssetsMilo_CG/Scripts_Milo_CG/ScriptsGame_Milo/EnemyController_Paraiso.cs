@@ -5,49 +5,71 @@ using UnityEngine.AI;
 
 public class EnemyController_Paraiso : MonoBehaviour
 {
-    private NavMeshAgent agente;
-    private Transform jugador;
+    public Transform[] puntosDeAparicion; // Asigna aquí tus 4 esferas
+    public float tiempoParaReaccionar = 10f;
+    public AudioSource audioSource;
+    public AudioClip[] sonidosPuerta; // Un sonido distinto por puerta
 
-    // Posición de respawn del jugador (puede ser pública o asignada desde GameManager)
-    public Vector3 puntoRespawn;
+    private bool jugadorPerdio = false;
+    private int indiceActual = -1;
+    private Coroutine rutinaEnemigo;
 
     void Start()
     {
-        agente = GetComponent<NavMeshAgent>();
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-
-        if (playerObj != null)
-        {
-            jugador = playerObj.transform;
-            Debug.Log("Jugador encontrado: " + jugador.name);
-
-            // Guardamos la posición inicial como punto de respawn por defecto
-            puntoRespawn = jugador.position;
-            Debug.Log("Punto de respawn inicial: " + puntoRespawn);
-        }
+        IniciarRutina();
     }
 
-    void Update()
+    public void IniciarRutina()
     {
-        if (jugador != null)
-        {
-            agente.SetDestination(jugador.position);
-        }
+        rutinaEnemigo = StartCoroutine(AparicionEnemigo());
     }
 
-    // Detectar colisión con el jugador
-    private void OnCollisionEnter(Collision collision)
+    public void DetenerRutina()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (rutinaEnemigo != null)
+            StopCoroutine(rutinaEnemigo);
+    }
+
+    IEnumerator AparicionEnemigo()
+    {
+        while (!jugadorPerdio)
         {
-            CharacterController cc = jugador.GetComponent<CharacterController>();
-            if (cc != null) cc.enabled = false;
+            Debug.Log("Cambiando de posicion enemy");
+            indiceActual = Random.Range(0, puntosDeAparicion.Length);
+            Transform punto = puntosDeAparicion[indiceActual];
+            transform.position = punto.position;
 
-            jugador.position = puntoRespawn;
+            // Sonido de aviso
+            if (audioSource && sonidosPuerta.Length > indiceActual)
+                audioSource.PlayOneShot(sonidosPuerta[indiceActual]);
 
-            if (cc != null) cc.enabled = true;
+            Debug.Log("¡Enemigo en puerta: " + indiceActual + "!");
 
-            Debug.Log("¡Enemy tocó al jugador con CharacterController! Teleport.");
+            // Esperar a que se cierre la puerta
+            float tiempo = 0f;
+            while (tiempo < tiempoParaReaccionar)
+            {
+                if (InteractionDoors.EstadoPuertas[indiceActual] == false) // Puerta cerrada
+                {
+                    Debug.Log("Puerta cerrada a tiempo.");
+                    break;
+                }
+
+                tiempo += Time.deltaTime;
+                yield return null;
+            }
+
+            // Si no se cerró a tiempo
+            if (InteractionDoors.EstadoPuertas[indiceActual] == true)
+            {
+                jugadorPerdio = true;
+                Debug.Log("¡PERDISTE!");
+                // Aquí puedes activar un GameOver u otro evento
+                break;
+            }
+
+            // Esperar un poco antes de reaparecer
+            yield return new WaitForSeconds(2f);
         }
     }
 }

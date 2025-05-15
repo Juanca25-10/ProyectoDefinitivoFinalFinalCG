@@ -9,10 +9,15 @@ public class InteractionDoors : MonoBehaviour, IInteractuable
     public float doorCloseAngle = 0f;
     public float smooth = 2f;
 
-    
+    public int indicePuerta; // Asigna manualmente 0 a 3 en el Inspector
+
+    public static List<bool> EstadoPuertas = new List<bool>() { true, true, true, true };
+
+
 
     public void ActivarObjeto()
     {
+        EstadoPuertas[indicePuerta] = doorOpen;
         if (doorOpen)
         {
             doorOpen = false;

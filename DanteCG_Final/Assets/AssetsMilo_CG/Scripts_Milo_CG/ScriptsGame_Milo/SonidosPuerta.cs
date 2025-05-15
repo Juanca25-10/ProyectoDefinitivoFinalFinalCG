@@ -9,7 +9,7 @@ public class SonidosPuerta : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("TriggerDooor"))
+        if (other.CompareTag("TriggerDoor"))
         {
             AudioSource.PlayClipAtPoint(closeDoor, transform.position, 1);
             Debug.Log("Puerta cerrada");
