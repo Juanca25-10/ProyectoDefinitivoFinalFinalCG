@@ -52,14 +52,7 @@ public class NewBehaviourScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            openDoor();
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            closeDoor();
-        }
+        
 
     }
 
@@ -87,8 +80,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     IEnumerator ChanceDoorState(bool newState)
     {
-        //button.transform.position = openPositionTransformB.position;
-        //button.transform.position = closedPositionTransformB.position;
 
         // Determinar posición objetivo para la puerta
         Transform doorTargetPosition = newState ? openPositionTransform : closedPositionTransform;
@@ -142,6 +133,20 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
     }
+
+    public void ActivarObjeto()
+    {
+        // Alterna el estado (abre o cierra la puerta)
+        if (currentCorutine != null)
+        {
+            StopCoroutine(currentCorutine);
+        }
+
+        currentCorutine = StartCoroutine(ChanceDoorState(!doorState));
+        doorState = !doorState;
+    }
+
+
 
 
 
