@@ -111,14 +111,31 @@ public class NewBehaviourScript : MonoBehaviour
 
         while (!finish)
         {
-            doorObject.transform.position = Vector3.MoveTowards(doorObject.transform.position, targetPosition.position, doorSpeed*Time.deltaTime);
+            //doorObject.transform.position = Vector3.MoveTowards(doorObject.transform.position, targetPosition.position, doorSpeed*Time.deltaTime);
+
+            //float distance = Vector3.Distance(doorObject.transform.position, targetPosition.position);
+
+            //if(distance < 0.1f)
+            //{
+            //    setDoorState(newState);
+            //    finish = true;
+            //}
+
+            doorObject.transform.position = Vector3.MoveTowards(doorObject.transform.position, targetPosition.position, doorSpeed * Time.deltaTime);
 
             float distance = Vector3.Distance(doorObject.transform.position, targetPosition.position);
 
-            if(distance < 0.1f)
+            if (distance < 0.1f)
             {
                 setDoorState(newState);
                 finish = true;
+
+                if (newState) // Si abrimos la puerta
+                {
+                    yield return new WaitForSeconds(3f); // Esperamos 5 segundos
+                    currentCorutine = StartCoroutine(ChanceDoorState(false)); // Cerramos
+                    yield break;
+                }
             }
 
 
