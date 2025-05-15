@@ -4,15 +4,145 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
+
+    public GameObject button;
+    public GameObject doorObject;
+    public GameObject wallObject;
+    public GameObject columnObject;
+
+    public Transform openPositionTransform;
+    public Transform closedPositionTransform;
+
+    public Transform openPositionTransformB;
+    public Transform closedPositionTransformB;
+
+    public bool doorState = false;
+    public bool buttonState = false;
+
+    public float doorSpeed = 2f;
+
+    Coroutine currentCorutine;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        setDoorState(doorState);
+        setDoorState(buttonState);
+
     }
+
+
+    void setDoorState(bool s)
+    {
+        if (s)
+        {
+            button.transform.position = openPositionTransformB.position;
+            doorObject.transform.position = openPositionTransform.position;
+
+        }
+        else
+        {
+            button.transform.position = closedPositionTransformB.position;
+            doorObject.transform.position = closedPositionTransform.position;
+        }
+
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            openDoor();
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            closeDoor();
+        }
+
     }
+
+    public void openDoor()
+    {
+        Debug.Log("Open Door");
+        if(currentCorutine != null)
+        {
+            StopCoroutine(currentCorutine);
+        }
+        currentCorutine = StartCoroutine(ChanceDoorState(true));
+
+    }
+
+    public void closeDoor()
+    {
+      
+        Debug.Log("Close Door");
+        if (currentCorutine != null)
+        {
+            StopCoroutine(currentCorutine);
+        }
+        currentCorutine = StartCoroutine(ChanceDoorState(false));
+    }
+
+    IEnumerator ChanceDoorState(bool newState)
+    {
+        //button.transform.position = openPositionTransformB.position;
+        //button.transform.position = closedPositionTransformB.position;
+
+        // Determinar posición objetivo para la puerta
+        Transform doorTargetPosition = newState ? openPositionTransform : closedPositionTransform;
+
+        // Determinar posición objetivo para el botón (simulando que se presiona y luego vuelve)
+        Vector3 buttonPressedPosition = openPositionTransformB.position;
+        Vector3 buttonOriginalPosition = closedPositionTransformB.position;
+
+        // Mover botón hacia abajo (presionado)
+        float pressSpeed = doorSpeed * 2f;
+        while (Vector3.Distance(button.transform.position, buttonPressedPosition) > 0.01f)
+        {
+            button.transform.position = Vector3.MoveTowards(button.transform.position, buttonPressedPosition, pressSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        bool finish = false;
+
+        Transform targetPosition;
+
+        if (newState)
+        {
+            targetPosition = openPositionTransform;
+        }
+        else
+        {
+            targetPosition = closedPositionTransform;
+        }
+
+        while (!finish)
+        {
+            doorObject.transform.position = Vector3.MoveTowards(doorObject.transform.position, targetPosition.position, doorSpeed*Time.deltaTime);
+
+            float distance = Vector3.Distance(doorObject.transform.position, targetPosition.position);
+
+            if(distance < 0.1f)
+            {
+                setDoorState(newState);
+                finish = true;
+            }
+
+
+            yield return null;
+
+        }
+        // Volver botón a su posición original (como si se "soltara")
+        while (Vector3.Distance(button.transform.position, buttonOriginalPosition) > 0.01f)
+        {
+            button.transform.position = Vector3.MoveTowards(button.transform.position, buttonOriginalPosition, pressSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+    }
+
+
+
 }
