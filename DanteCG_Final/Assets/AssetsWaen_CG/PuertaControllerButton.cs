@@ -146,6 +146,12 @@ public class NewBehaviourScript : MonoBehaviour
         doorState = !doorState;
     }
 
+    public void TogglePuerta()
+    {
+        // Cambia el estado del botón y la puerta
+        buttonState = !buttonState;
+        doorState = !doorState;
+    }
 
 
 

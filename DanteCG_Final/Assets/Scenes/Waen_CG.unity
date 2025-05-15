@@ -641,6 +641,7 @@ GameObject:
   - component: {fileID: 1071182235}
   - component: {fileID: 1071182234}
   - component: {fileID: 1071182233}
+  - component: {fileID: 1071182237}
   m_Layer: 6
   m_Name: Boton
   m_TagString: Untagged
@@ -734,6 +735,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1560424866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1071182237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071182232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd72e403d5955a49a9fad8deb4638d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puertaControlador: {fileID: 1560424867}
 --- !u!1 &1105541791
 GameObject:
   m_ObjectHideFlags: 0
