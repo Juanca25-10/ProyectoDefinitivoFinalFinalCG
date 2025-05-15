@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Door
+  - TriggerDoor
   - Objetivo
   layers:
   - Default
