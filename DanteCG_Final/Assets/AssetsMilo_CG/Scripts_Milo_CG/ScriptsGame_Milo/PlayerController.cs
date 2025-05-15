@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this; // Singleton para acceso estático
+        //Instance = this; // Singleton para acceso estático
         _player = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         _originalCameraLocalPos = _cameraHolder.localPosition;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         HandleCrouch();
 
         // Solo manejamos movimiento si está permitido
-        if (canMove)
+        //if (canMove)
             HandleMovement();
     }
 
