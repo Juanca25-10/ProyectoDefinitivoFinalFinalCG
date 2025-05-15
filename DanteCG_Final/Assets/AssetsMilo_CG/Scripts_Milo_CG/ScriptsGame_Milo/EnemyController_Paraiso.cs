@@ -19,9 +19,11 @@ public class EnemyController_Paraiso : MonoBehaviour
         if (playerObj != null)
         {
             jugador = playerObj.transform;
+            Debug.Log("Jugador encontrado: " + jugador.name);
 
             // Guardamos la posición inicial como punto de respawn por defecto
             puntoRespawn = jugador.position;
+            Debug.Log("Punto de respawn inicial: " + puntoRespawn);
         }
     }
 
@@ -38,11 +40,14 @@ public class EnemyController_Paraiso : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Teletransporta al jugador al punto de respawn
+            CharacterController cc = jugador.GetComponent<CharacterController>();
+            if (cc != null) cc.enabled = false;
+
             jugador.position = puntoRespawn;
 
-            // También puedes resetear otros estados aquí si es necesario
-            Debug.Log("¡El enemigo tocó al jugador! Reiniciando posición.");
+            if (cc != null) cc.enabled = true;
+
+            Debug.Log("¡Enemy tocó al jugador con CharacterController! Teleport.");
         }
     }
 }
