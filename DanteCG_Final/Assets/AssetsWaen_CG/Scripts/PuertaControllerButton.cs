@@ -23,6 +23,10 @@ public class NewBehaviourScript : MonoBehaviour
 
     Coroutine currentCorutine;
 
+    public AudioSource audioSource;        // El componente de audio
+    public AudioClip audioOpen;             // Sonido para abrir puerta
+    public AudioClip audioClose;           // Sonido para cerrar puerta
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,13 +52,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-    }
 
     public void openDoor()
     {
@@ -98,6 +95,18 @@ public class NewBehaviourScript : MonoBehaviour
 
         bool finish = false;
 
+        if (audioSource != null)
+        {
+            if (newState && audioOpen != null)
+            {
+                audioSource.PlayOneShot(audioOpen);
+            }
+            else if (!newState && audioClose != null)
+            {
+                audioSource.PlayOneShot(audioClose);
+            }
+        }
+
         Transform targetPosition;
 
         if (newState)
@@ -111,15 +120,6 @@ public class NewBehaviourScript : MonoBehaviour
 
         while (!finish)
         {
-            //doorObject.transform.position = Vector3.MoveTowards(doorObject.transform.position, targetPosition.position, doorSpeed*Time.deltaTime);
-
-            //float distance = Vector3.Distance(doorObject.transform.position, targetPosition.position);
-
-            //if(distance < 0.1f)
-            //{
-            //    setDoorState(newState);
-            //    finish = true;
-            //}
 
             doorObject.transform.position = Vector3.MoveTowards(doorObject.transform.position, targetPosition.position, doorSpeed * Time.deltaTime);
 

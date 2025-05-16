@@ -38,9 +38,7 @@ public class Recolectable : MonoBehaviour, IInteractuable
 
     private IEnumerator ExaminarYRecolectar()
     {
-
-
-
+        GameController.Instance.ReproducirSonidoCorazon();
         float elapsedTime = 0f;
         Vector3 targetPosition = _mainCamera.position + _mainCamera.forward * 0.5f;
 
