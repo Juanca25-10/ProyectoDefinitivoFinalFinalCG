@@ -4,17 +4,53 @@ using UnityEngine;
 
 public class InteractionDoors : MonoBehaviour, IInteractuable
 {
-    public bool doorOpen = true;
+    public bool doorOpen;
     public float doorOpenAngle = 90f;
     public float doorCloseAngle = 0f;
     public float smooth = 2f;
 
-    public AudioClip openDoor;
-    public AudioClip closeDoor;
+    public int indicePuerta; // Asigna manualmente 0 a 3 en el Inspector
+
+    public static List<bool> EstadoPuertas = new List<bool>() { true, true, true, true };
+
+
+    void Awake()
+    {
+        // Asegura que la lista tiene el tamaño correcto
+        if (indicePuerta >= EstadoPuertas.Count)
+        {
+            for (int i = EstadoPuertas.Count; i <= indicePuerta; i++)
+            {
+                EstadoPuertas.Add(true);
+            }
+        }
+
+        // Forzar valor inicial correcto
+        EstadoPuertas[indicePuerta] = doorOpen;
+    }
 
     public void ActivarObjeto()
     {
-        Destroy(gameObject);
+        if (doorOpen)
+        {
+            doorOpen = false;
+            Debug.Log("Cerrando puerta");
+            EstadoPuertas[indicePuerta] = false;
+            StartCoroutine(AbrirDespuesDeTiempo(5f));
+        }
+        else
+        {
+            doorOpen = true;
+            Debug.Log("Abriendo puerta");
+            EstadoPuertas[indicePuerta] = true;
+        }
+    }
+
+    IEnumerator AbrirDespuesDeTiempo(float segundos)
+    {
+        yield return new WaitForSeconds(segundos);
+        doorOpen = true;
+        EstadoPuertas[indicePuerta] = true;
     }
 
     void Update()
@@ -31,19 +67,6 @@ public class InteractionDoors : MonoBehaviour, IInteractuable
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("TriggerDoor"))
-        {
-            AudioSource.PlayClipAtPoint(openDoor, transform.position, 1);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("TriggerDoor"))
-        {
-            AudioSource.PlayClipAtPoint(closeDoor, transform.position, 1);
-        }
-    }
+    
 }
 

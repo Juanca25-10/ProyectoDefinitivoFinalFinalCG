@@ -5,49 +5,90 @@ using UnityEngine.AI;
 
 public class EnemyController_Paraiso : MonoBehaviour
 {
-    private NavMeshAgent agente;
-    private Transform jugador;
+    private GameController_ParaisoOscuro gameC;
+    public GameObject[] puntosDeAparicion; // Asigna aquí tus 4 esferas
+    public float tiempoParaReaccionar = 15f;
+    public AudioSource audioSource;
+    public AudioClip[] sonidosPuerta; // Un sonido distinto por puerta
 
-    // Posición de respawn del jugador (puede ser pública o asignada desde GameManager)
-    public Vector3 puntoRespawn;
+    private bool jugadorPerdio = false;
+    private int indiceActual = -1;
+    private Coroutine rutinaEnemigo;
 
     void Start()
     {
-        agente = GetComponent<NavMeshAgent>();
-        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-
-        if (playerObj != null)
+        for (int i = 0; i < puntosDeAparicion.Length; i++)
         {
-            jugador = playerObj.transform;
-            Debug.Log("Jugador encontrado: " + jugador.name);
-
-            // Guardamos la posición inicial como punto de respawn por defecto
-            puntoRespawn = jugador.position;
-            Debug.Log("Punto de respawn inicial: " + puntoRespawn);
+            puntosDeAparicion[i].SetActive(false);
         }
+
+        gameC = FindObjectOfType<GameController_ParaisoOscuro>();
     }
 
-    void Update()
+    public void IniciarRutina()
     {
-        if (jugador != null)
-        {
-            agente.SetDestination(jugador.position);
-        }
+        rutinaEnemigo = StartCoroutine(AparicionEnemigo());
     }
 
-    // Detectar colisión con el jugador
-    private void OnCollisionEnter(Collision collision)
+    public void DetenerRutina()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (rutinaEnemigo != null)
+            StopCoroutine(rutinaEnemigo);
+    }
+
+    IEnumerator AparicionEnemigo()
+    {
+        while (!jugadorPerdio)
         {
-            CharacterController cc = jugador.GetComponent<CharacterController>();
-            if (cc != null) cc.enabled = false;
+            // Desactiva todas las esferas antes de activar la nueva
+            for (int i = 0; i < puntosDeAparicion.Length; i++)
+            {
+                puntosDeAparicion[i].SetActive(false);
+            }
 
-            jugador.position = puntoRespawn;
+            // Elegir punto aleatorio y mover al enemigo
+            indiceActual = Random.Range(0, puntosDeAparicion.Length);
+            Transform punto = puntosDeAparicion[indiceActual].transform;
+            puntosDeAparicion[indiceActual].SetActive(true); // Activar la nueva esfera
+            transform.position = punto.position;
 
-            if (cc != null) cc.enabled = true;
+            // Sonido
+            if (audioSource && sonidosPuerta.Length > indiceActual)
+                AudioSource.PlayClipAtPoint(sonidosPuerta[indiceActual], punto.position);
 
-            Debug.Log("¡Enemy tocó al jugador con CharacterController! Teleport.");
+            Debug.Log("¡Enemigo en puerta: " + indiceActual + "!");
+
+            // Esperar por reacción del jugador
+            float tiempo = 0f;
+            while (tiempo < tiempoParaReaccionar)
+            {
+                if (InteractionDoors.EstadoPuertas[indiceActual] == false)
+                {
+                    Debug.Log("Puerta cerrada " + indiceActual + " a tiempo.");
+                    break; // No necesitas desactivar aquí, ya se desactivan al inicio del loop
+
+                    //gameC.PuertaCerradaCorrectamente();
+                }
+
+                tiempo += Time.deltaTime;
+                yield return null;
+            }
+
+            if (InteractionDoors.EstadoPuertas[indiceActual] == true)
+            {
+                jugadorPerdio = true;
+                Debug.Log("¡PERDISTE!");
+                // Puedes llamar aquí a GameOver
+                break;
+            }
+
+            yield return new WaitForSeconds(2f);
+        }
+
+        // Asegúrate de desactivar todas al terminar
+        for (int i = 0; i < puntosDeAparicion.Length; i++)
+        {
+            puntosDeAparicion[i].SetActive(false);
         }
     }
 }

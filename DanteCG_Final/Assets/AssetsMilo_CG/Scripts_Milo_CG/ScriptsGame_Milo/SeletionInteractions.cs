@@ -38,10 +38,11 @@ public class SeletionInteractions : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                IInteractuable objeto = hit.collider.GetComponent<IInteractuable>();
+                IInteractuable objeto = hit.collider.GetComponentInParent<IInteractuable>();
                 if (objeto != null)
                 {
                     objeto.ActivarObjeto();
+                    Debug.Log("Interacting with: " + objeto);
                 }
             }
         }
