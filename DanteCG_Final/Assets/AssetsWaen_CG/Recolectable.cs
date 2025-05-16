@@ -8,7 +8,7 @@ public class Recolectable : MonoBehaviour, IInteractuable
     private Transform _mainCamera;
     private bool _beingExamined = false;
 
-    private float _examineDuration = 2f;
+    private float _examineDuration = 4f;
     private Vector3 _originalPosition;
     private Quaternion _originalRotation;
 
@@ -38,19 +38,25 @@ public class Recolectable : MonoBehaviour, IInteractuable
 
     private IEnumerator ExaminarYRecolectar()
     {
+
+
+
         float elapsedTime = 0f;
         Vector3 targetPosition = _mainCamera.position + _mainCamera.forward * 0.5f;
-        Quaternion targetRotation = Quaternion.LookRotation(-_mainCamera.forward);
 
         while (elapsedTime < _examineDuration)
         {
+            // Movimiento hacia la cámara
             transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * 5f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+
+            // Rotación lenta sobre el eje Y (como girando para ser examinado)
+            transform.Rotate(Vector3.up * 50f * Time.deltaTime, Space.Self);
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        RecolectorCorazones.Instance.ContarCorazon(); // ? Llamamos al recolector
+        RecolectorCorazones.Instance.ContarCorazon();
         Destroy(gameObject);
     }
 }

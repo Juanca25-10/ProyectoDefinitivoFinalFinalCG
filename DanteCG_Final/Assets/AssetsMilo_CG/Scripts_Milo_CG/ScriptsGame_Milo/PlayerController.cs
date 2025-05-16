@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
     private float defaultCamY;
     private float bobTimer = 0f;
 
+    
+
     private void Awake()
     {
         //Instance = this; // Singleton para acceso estático
@@ -52,7 +54,27 @@ public class PlayerController : MonoBehaviour
 
         // Solo manejamos movimiento si está permitido
         //if (canMove)
-            HandleMovement();
+         HandleMovement();
+        CheckForInteractable();
+    }
+
+    private void CheckForInteractable()
+    {
+
+       Ray ray = new Ray(_cameraHolder.position, _cameraHolder.forward);
+       RaycastHit hit;
+
+       if (Physics.Raycast(ray, out hit, 3f, LayerMask.GetMask("RaycastDetect")))
+       {
+           if (Input.GetKeyDown(KeyCode.E))
+            {
+               IInteractuable interactuable = hit.collider.GetComponent<IInteractuable>();
+               if (interactuable != null)
+                {
+                    interactuable.ActivarObjeto();
+                }
+            }
+        }
     }
 
     private void HandleMovement()

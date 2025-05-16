@@ -7,11 +7,13 @@ public class RecolectorCorazones : MonoBehaviour
 {
 
     public static RecolectorCorazones Instance;
+    
 
     public int numDddeCorazones;
     public TextMeshProUGUI textoMision;
     public TextMeshProUGUI textoCorazones;
 
+    public PuertaController puerta;
 
 
     private void Awake()
@@ -35,6 +37,9 @@ public class RecolectorCorazones : MonoBehaviour
         if (numDddeCorazones <= 0)
         {
             textoMision.text = "¡Completaste la misión!";
+            puerta.AbrirPuerta();
+            
+
         }
     }
 
