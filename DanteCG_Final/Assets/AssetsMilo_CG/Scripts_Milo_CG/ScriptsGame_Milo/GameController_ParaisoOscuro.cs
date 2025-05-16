@@ -3,16 +3,61 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum GameState
+{
+    PreInicio,
+    JugandoTutorial,
+    Jugando,
+    FinJuego
+}
 public class GameController_ParaisoOscuro : MonoBehaviour
 {
+    public GameState estadoActual = GameState.PreInicio;
+    EnemyController_Paraiso enemigoController;
+
     private GameManager gm;
     public int objetosRecolectadosEscena = 0;
     public int objetosNecesariosEscena = 4;
     public TextMeshProUGUI textoPuntaje;
 
+    public int puertasAbiertas= 0;
+    public int puertasNecesarias2daParte = 8;
+    public int puertasNecesariasTerminar = 16;
+
     void Start()
     {
+        estadoActual = GameState.PreInicio;
         gm = GameManager.Instance;
+        enemigoController = FindObjectOfType<EnemyController_Paraiso>();
+    }
+
+    public void EstadoJugandoTutorial()
+    {
+        estadoActual = GameState.JugandoTutorial;
+        enemigoController.IniciarRutina();
+
+        Debug.Log("Estado: Jugando Tutorial");
+    }
+
+    public void PuertaCerradaCorrectamente()
+    {
+        if(estadoActual == GameState.JugandoTutorial || estadoActual == GameState.Jugando)
+        {
+            puertasAbiertas++;
+            gm.SumarObjeto();
+            if (puertasAbiertas == puertasNecesarias2daParte)
+            {
+                estadoActual = GameState.Jugando;
+                //Metodo que activa esqueletosEnemy
+                Debug.Log("Estado: JugandoEsqueletos");
+            }
+            if (puertasAbiertas == puertasNecesariasTerminar)
+            {
+                estadoActual = GameState.FinJuego;
+                enemigoController.DetenerRutina(); //Detiene la rutina del enemigoPuertas
+                Debug.Log("Estado: FinJuego");
+            }
+        }
     }
 
     public void ObjetoRecolectado()

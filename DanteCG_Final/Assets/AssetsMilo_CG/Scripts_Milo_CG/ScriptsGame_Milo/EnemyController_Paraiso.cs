@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyController_Paraiso : MonoBehaviour
 {
+    private GameController_ParaisoOscuro gameC;
     public GameObject[] puntosDeAparicion; // Asigna aquí tus 4 esferas
     public float tiempoParaReaccionar = 15f;
     public AudioSource audioSource;
@@ -20,10 +21,8 @@ public class EnemyController_Paraiso : MonoBehaviour
         {
             puntosDeAparicion[i].SetActive(false);
         }
-        
-        IniciarRutina();
 
-        
+        gameC = FindObjectOfType<GameController_ParaisoOscuro>();
     }
 
     public void IniciarRutina()
@@ -67,6 +66,8 @@ public class EnemyController_Paraiso : MonoBehaviour
                 {
                     Debug.Log("Puerta cerrada " + indiceActual + " a tiempo.");
                     break; // No necesitas desactivar aquí, ya se desactivan al inicio del loop
+
+                    //gameC.PuertaCerradaCorrectamente();
                 }
 
                 tiempo += Time.deltaTime;
