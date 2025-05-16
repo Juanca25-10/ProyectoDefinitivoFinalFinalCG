@@ -67,6 +67,13 @@ public class InteractionDoors : MonoBehaviour, IInteractuable
         }
     }
 
-    
+    public static void CerrarTodasLasPuertas()
+    {
+        for (int i = 0; i < EstadoPuertas.Count; i++)
+        {
+            EstadoPuertas[i] = false; // false = cerrada
+        }
+    }
+
 }
 

@@ -25,18 +25,32 @@ public class EnemyController_Paraiso : MonoBehaviour
         gameC = FindObjectOfType<GameController_ParaisoOscuro>();
     }
 
-    public void IniciarRutina()
+    public void IniciarRutinaEnemigo1()
     {
-        rutinaEnemigo = StartCoroutine(AparicionEnemigo());
+        rutinaEnemigo = StartCoroutine(AparicionEnemigoPuertas());
+        Debug.Log("Iniciando rutina enemigo 1");
     }
 
-    public void DetenerRutina()
+    public void IniciarRutinaEnemigo2()
+    {
+        // Aquí puedes iniciar otra rutina si es necesario
+        Debug.Log("Iniciando rutina enemigo 2");
+    }
+
+    public void DetenerRutinaEnemigo2()
+    {
+        // Aquí puedes detener la rutina del enemigo 2 si es necesario
+        Debug.Log("Deteniendo rutina enemigo 2");
+    }
+
+    public void DetenerRutinaEnemigo1()
     {
         if (rutinaEnemigo != null)
             StopCoroutine(rutinaEnemigo);
+        Debug.Log("Deteniendo rutina enemigo 1");
     }
 
-    IEnumerator AparicionEnemigo()
+    IEnumerator AparicionEnemigoPuertas()
     {
         while (!jugadorPerdio)
         {

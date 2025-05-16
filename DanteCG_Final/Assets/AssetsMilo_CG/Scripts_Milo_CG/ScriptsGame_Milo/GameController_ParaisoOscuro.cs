@@ -14,6 +14,7 @@ public class GameController_ParaisoOscuro : MonoBehaviour
 {
     public GameState estadoActual = GameState.PreInicio;
     EnemyController_Paraiso enemigoController;
+    InteractionDoors InteraccionPuerta;
 
     private GameManager gm;
     public int objetosRecolectadosEscena = 0;
@@ -34,9 +35,27 @@ public class GameController_ParaisoOscuro : MonoBehaviour
     public void EstadoJugandoTutorial()
     {
         estadoActual = GameState.JugandoTutorial;
-        enemigoController.IniciarRutina();
+        enemigoController.IniciarRutinaEnemigo1();
 
         Debug.Log("Estado: Jugando Tutorial");
+    }
+
+    public void EstadoJugando()
+    {
+        estadoActual = GameState.Jugando;
+        enemigoController.IniciarRutinaEnemigo2();
+        Debug.Log("Estado: Jugando");
+    }
+
+    public void EstadoFinJuego()
+    {
+        estadoActual = GameState.FinJuego;
+        enemigoController.DetenerRutinaEnemigo1();
+        enemigoController.DetenerRutinaEnemigo2();
+
+        InteractionDoors.CerrarTodasLasPuertas();
+
+        Debug.Log("Estado: FinJuego");
     }
 
     public void PuertaCerradaCorrectamente()
@@ -54,7 +73,7 @@ public class GameController_ParaisoOscuro : MonoBehaviour
             if (puertasAbiertas == puertasNecesariasTerminar)
             {
                 estadoActual = GameState.FinJuego;
-                enemigoController.DetenerRutina(); //Detiene la rutina del enemigoPuertas
+                enemigoController.DetenerRutinaEnemigo1(); //Detiene la rutina del enemigoPuertas
                 Debug.Log("Estado: FinJuego");
             }
         }
