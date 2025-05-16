@@ -43,7 +43,7 @@ public class GameController_ParaisoOscuro : MonoBehaviour
     public void EstadoJugando()
     {
         estadoActual = GameState.Jugando;
-        enemigoController.IniciarRutinaEnemigo2();
+        
         Debug.Log("Estado: Jugando");
     }
 
@@ -51,7 +51,7 @@ public class GameController_ParaisoOscuro : MonoBehaviour
     {
         estadoActual = GameState.FinJuego;
         enemigoController.DetenerRutinaEnemigo1();
-        enemigoController.DetenerRutinaEnemigo2();
+        
 
         InteractionDoors.CerrarTodasLasPuertas();
 

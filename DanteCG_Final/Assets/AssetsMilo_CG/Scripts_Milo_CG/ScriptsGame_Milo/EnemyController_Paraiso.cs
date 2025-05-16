@@ -11,9 +11,11 @@ public class EnemyController_Paraiso : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] sonidosPuerta; // Un sonido distinto por puerta
 
-    private bool jugadorPerdio = false;
+    private bool jugadorPerdio = false; 
     private int indiceActual = -1;
     private Coroutine rutinaEnemigo;
+
+    public bool JugadorPerdio { get => jugadorPerdio; set => jugadorPerdio = value; }
 
     void Start()
     {
@@ -31,17 +33,6 @@ public class EnemyController_Paraiso : MonoBehaviour
         Debug.Log("Iniciando rutina enemigo 1");
     }
 
-    public void IniciarRutinaEnemigo2()
-    {
-        // Aquí puedes iniciar otra rutina si es necesario
-        Debug.Log("Iniciando rutina enemigo 2");
-    }
-
-    public void DetenerRutinaEnemigo2()
-    {
-        // Aquí puedes detener la rutina del enemigo 2 si es necesario
-        Debug.Log("Deteniendo rutina enemigo 2");
-    }
 
     public void DetenerRutinaEnemigo1()
     {
@@ -79,9 +70,11 @@ public class EnemyController_Paraiso : MonoBehaviour
                 if (InteractionDoors.EstadoPuertas[indiceActual] == false)
                 {
                     Debug.Log("Puerta cerrada " + indiceActual + " a tiempo.");
+                    if(gameC != null) gameC.PuertaCerradaCorrectamente();
+                    
                     break; // No necesitas desactivar aquí, ya se desactivan al inicio del loop
 
-                    //gameC.PuertaCerradaCorrectamente();
+                    
                 }
 
                 tiempo += Time.deltaTime;
