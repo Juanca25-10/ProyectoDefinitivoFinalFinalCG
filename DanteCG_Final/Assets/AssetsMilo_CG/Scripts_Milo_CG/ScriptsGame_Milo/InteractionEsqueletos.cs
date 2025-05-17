@@ -5,37 +5,39 @@ using UnityEngine;
 public class InteractionEsqueletos : MonoBehaviour, IInteractuable
 
 {
-    //AudioSource audioSource;
-    //public AudioClip sonidoEsqueleto;
     EnemyController_Paraiso enemigoControllerPuertas;
+    MeshRenderer meshRenderer;
+    Collider collider;
+    AudioSource audioSource;
 
     private Coroutine rutinaAparicion;
 
     void Start()
     {
-        //audioSource = GetComponent<AudioSource>();
-        this.gameObject.SetActive(false);
         enemigoControllerPuertas = FindObjectOfType<EnemyController_Paraiso>();
-        
+        meshRenderer = GetComponent<MeshRenderer>();
+        collider = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
+
+        // Oculta solo visualmente el esqueleto
+        DesactivarVisual();
     }
 
     void Update()
     {
-        // Si el jugador ha perdido, detiene la rutina de aparición
         if (enemigoControllerPuertas.JugadorPerdio)
         {
             if (rutinaAparicion != null)
             {
                 StopCoroutine(rutinaAparicion);
                 rutinaAparicion = null;
-                this.gameObject.SetActive(false);
+                DesactivarVisual();
             }
         }
     }
 
     public void IniciarEnemigoEsqueletos()
     {
-        // Inicia la corutina que lo activa cada cierto tiempo
         rutinaAparicion = StartCoroutine(AparicionAleatoria());
     }
 
@@ -43,26 +45,42 @@ public class InteractionEsqueletos : MonoBehaviour, IInteractuable
     {
         while (true)
         {
-            // Espera entre 5 y 10 segundos
-            float tiempoEspera = Random.Range(5f, 10f);
+            float tiempoEspera = Random.Range(10f, 20f);
             yield return new WaitForSeconds(tiempoEspera);
 
-            // Activa el esqueleto
             ActivarEsqueleto();
         }
     }
 
     public void ActivarEsqueleto()
     {
-        if (!gameObject.activeSelf)
+        meshRenderer.enabled = true;
+        collider.enabled = true;
+        if (!audioSource.isPlaying)
+            audioSource.Play();
+    }
+
+    public void DesactivarVisual()
+    {
+        meshRenderer.enabled = false;
+        collider.enabled = false;
+        if (audioSource.isPlaying)
+            audioSource.Stop();
+    }
+
+    public void DesactivarEsqueletos()
+    {
+        if (rutinaAparicion != null)
         {
-            this.gameObject.SetActive(true);
-            //audioSource.PlayOneShot(sonidoEsqueleto);
+            StopCoroutine(rutinaAparicion);
+            rutinaAparicion = null;
         }
+
+        DesactivarVisual(); // en lugar de apagar todo el GameObject
     }
 
     public void ActivarObjeto()
     {
-        this.gameObject.SetActive(false);
+        DesactivarVisual(); // esto se llama al presionar 'E' según tu lógica
     }
 }

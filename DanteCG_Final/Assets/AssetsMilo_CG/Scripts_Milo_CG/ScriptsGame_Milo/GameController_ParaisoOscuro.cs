@@ -14,7 +14,10 @@ public class GameController_ParaisoOscuro : MonoBehaviour
 {
     public GameState estadoActual = GameState.PreInicio;
     EnemyController_Paraiso enemigoController;
-    InteractionDoors InteraccionPuerta;
+    public InteractionEsqueletos[] esqueletos;
+    //InteractionDoors InteraccionPuerta;
+
+    public TextMeshProUGUI CantidadPuertas;
 
     private GameManager gm;
     public int objetosRecolectadosEscena = 0;
@@ -43,7 +46,14 @@ public class GameController_ParaisoOscuro : MonoBehaviour
     public void EstadoJugando()
     {
         estadoActual = GameState.Jugando;
-        
+        foreach (var esqueleto in esqueletos)
+        {
+            if (esqueleto != null)
+                esqueleto.IniciarEnemigoEsqueletos();
+            else
+                Debug.LogWarning("Un esqueleto está sin asignar en el array.");
+        }
+
         Debug.Log("Estado: Jugando");
     }
 
@@ -51,7 +61,15 @@ public class GameController_ParaisoOscuro : MonoBehaviour
     {
         estadoActual = GameState.FinJuego;
         enemigoController.DetenerRutinaEnemigo1();
+        foreach (var esqueleto in esqueletos)
+        {
+            if (esqueleto != null)
+                esqueleto.DesactivarEsqueletos();
+            else
+                Debug.LogWarning("Un esuqeleto no se pudo apagar");
+        }
         
+
 
         InteractionDoors.CerrarTodasLasPuertas();
 
@@ -63,17 +81,16 @@ public class GameController_ParaisoOscuro : MonoBehaviour
         if(estadoActual == GameState.JugandoTutorial || estadoActual == GameState.Jugando)
         {
             puertasAbiertas++;
-            gm.SumarObjeto();
-            if (puertasAbiertas == puertasNecesarias2daParte)
+            CantidadPuertas.text = puertasAbiertas.ToString();
+            //gm.SumarObjeto();
+            if (puertasAbiertas == puertasNecesarias2daParte && estadoActual == GameState.JugandoTutorial)
             {
-                estadoActual = GameState.Jugando;
-                //Metodo que activa esqueletosEnemy
+                EstadoJugando();
                 Debug.Log("Estado: JugandoEsqueletos");
             }
             if (puertasAbiertas == puertasNecesariasTerminar)
             {
-                estadoActual = GameState.FinJuego;
-                enemigoController.DetenerRutinaEnemigo1(); //Detiene la rutina del enemigoPuertas
+                EstadoFinJuego(); //Detiene la rutina del enemigoPuertas
                 Debug.Log("Estado: FinJuego");
             }
         }
