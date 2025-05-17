@@ -26,7 +26,7 @@ public class GameController_ParaisoOscuro : MonoBehaviour
 
     public int puertasAbiertas= 0;
     public int puertasNecesarias2daParte = 8;
-    public int puertasNecesariasTerminar = 16;
+    public int puertasNecesariasTerminar = 20;
 
     void Start()
     {

@@ -7,7 +7,7 @@ public class InteractionEsqueletos : MonoBehaviour, IInteractuable
 {
     EnemyController_Paraiso enemigoControllerPuertas;
     MeshRenderer meshRenderer;
-    Collider collider;
+    Collider SuCollider;
     AudioSource audioSource;
 
     private Coroutine rutinaAparicion;
@@ -16,7 +16,7 @@ public class InteractionEsqueletos : MonoBehaviour, IInteractuable
     {
         enemigoControllerPuertas = FindObjectOfType<EnemyController_Paraiso>();
         meshRenderer = GetComponent<MeshRenderer>();
-        collider = GetComponent<Collider>();
+        SuCollider = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();
 
         // Oculta solo visualmente el esqueleto
@@ -55,7 +55,7 @@ public class InteractionEsqueletos : MonoBehaviour, IInteractuable
     public void ActivarEsqueleto()
     {
         meshRenderer.enabled = true;
-        collider.enabled = true;
+        SuCollider.enabled = true;
         if (!audioSource.isPlaying)
             audioSource.Play();
     }
@@ -63,7 +63,7 @@ public class InteractionEsqueletos : MonoBehaviour, IInteractuable
     public void DesactivarVisual()
     {
         meshRenderer.enabled = false;
-        collider.enabled = false;
+        SuCollider.enabled = false;
         if (audioSource.isPlaying)
             audioSource.Stop();
     }
