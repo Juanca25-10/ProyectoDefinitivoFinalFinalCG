@@ -36,7 +36,8 @@ public class RecolectorCorazones : MonoBehaviour
 
         if (numDddeCorazones <= 0)
         {
-            textoMision.text = "¡Completaste la misión!";
+            textoMision.text = "¡Completaste la misión! \n" +
+                "Sal de la estacion y sube las escaleras";
             puerta.AbrirPuerta();
             
 
