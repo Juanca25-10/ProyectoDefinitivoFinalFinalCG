@@ -365,7 +365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebcbf6a350ed2324bb79dcba65a9ddc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorResaltado: {r: 1, g: 0, b: 0, a: 1}
+  colorResaltado: {r: 0.9169811, g: 0.8810704, b: 0.85642576, a: 1}
 --- !u!114 &5844840956945314359
 MonoBehaviour:
   m_ObjectHideFlags: 0
